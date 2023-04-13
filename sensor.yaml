@@ -1,0 +1,160 @@
+esphome:
+  name: humidity-temperature
+  on_boot:
+    then:
+      - lambda: !lambda id(backlight_output).set_max_power(id(backlight_brightness).state);
+      - script.execute: pulse_backlight
+      - delay: 10ms
+      - lambda: |-              # clear garbage from screen
+          id(screen).setup();
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    version: latest
+
+external_components:
+  - source: github://pr#3500
+    components:
+      # list all components modified by this Pull Request here
+      - web_server
+      - web_server_idf
+      - web_server_base
+      - captive_portal
+
+# Enable logging
+logger:
+
+web_server:
+
+ota:
+  password: !secret password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Blanket Fallback Hotspot"
+    password: !secret fallback_password
+
+captive_portal:
+
+mqtt:
+  broker: mqtt.2e0byo.co.uk
+  port: 8883
+  skip_cert_cn_check: true
+  idf_send_async: true
+  username: humidity-sensor
+  password: !secret mqtt_password
+  certificate_authority: !secret certificate_authority
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: Europe/Paris
+
+i2c:
+  sda: 21
+  scl: 22
+
+sensor:
+  - platform: aht10
+    temperature:
+      name: "Temperature"
+      id: temperature
+    humidity:
+      name: "Humidity"
+      id: humidity
+
+display:
+  - platform: lcd_gpio
+    id: screen
+    dimensions: 16x2
+    data_pins:
+      - GPIO18
+      - GPIO17
+      - GPIO16
+      - GPIO4
+    enable_pin:
+      GPIO19
+    rs_pin:
+      GPIO23
+    lambda: |-
+      it.printf("%3.1f %% %3.1f \xdf" "C", id(humidity).state, id(temperature).state);
+      it.strftime(0, 1, "%H:%M:%S (%d/%m)", id(sntp_time).now());
+
+number:
+  - platform: template
+    name: Backlight Brightness
+    id: backlight_brightness
+    initial_value: 0.7
+    restore_value: true
+    step: 0.01
+    min_value: 0
+    max_value: 1
+    optimistic: true
+    on_value:
+      then:
+        - light.turn_on:
+            id: backlight
+        - lambda: |-
+            id(backlight_output).set_max_power(x);
+  - platform: template
+    name: Backlight on time (seconds)
+    id: backlight_on_seconds
+    unit_of_measurement: "Seconds"
+    initial_value: 60
+    min_value: 5
+    max_value: 120
+    step: 1
+    optimistic: true
+    restore_value: true
+
+output:
+  - platform: ledc
+    pin: GPIO13
+    id: backlight_output
+
+light:
+  - platform: status_led
+    name: "Status"
+    pin: GPIO2
+  - platform: monochromatic
+    id: backlight
+    output: backlight_output
+    default_transition_length: 1s
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO32
+      mode:
+        input: true
+        pullup: true
+    name: Button
+    id: button
+    filters:
+      delayed_off: 10ms
+    on_press:
+      script.execute: pulse_backlight
+
+script:
+  - id: pulse_backlight
+    mode: restart
+    then:
+      if:
+        condition:
+          light.is_on: backlight
+        then:
+          - light.turn_off: backlight
+        else:
+          - light.turn_on: backlight
+          - delay: !lambda "return id(backlight_on_seconds).state * 1000;"
+          - light.turn_off: backlight
+
+
+
+
