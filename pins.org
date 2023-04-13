@@ -1,0 +1,50 @@
+| Logical | Use | GPIO | In? | Out? | Notes                                |
+|---------+-----+------+-----+------+--------------------------------------|
+|      30 | RS  |   23 | y   | y    |                                      |
+|      29 | scl |   22 | y   | y    | scl                                  |
+|      28 |     |    1 | Tx  | y    | debug at boot                        |
+|      27 |     |    3 | y   | Rx   | high at boot                         |
+|      26 | sda |   21 | y   | y    | sda                                  |
+|      25 | E   |   19 | y   | y    |                                      |
+|      24 | D4  |   18 | y   | y    |                                      |
+|      23 |     |    5 | y   | y    | strapping pin, pwm at boot           |
+|      22 | D5  |   17 | y   | y    |                                      |
+|      21 | D6  |   16 | y   | y    |                                      |
+|      20 | D7  |    4 | y   | y    |                                      |
+|      19 |     |    2 | y   | y    | LED; floating/low to flash           |
+|      18 |     |   15 | y   | y    | strapping pin; pwm at boot           |
+|         |     |    0 | y   | y    | pulled up; pwm at boot; low to flash |
+|         |     |    8 |     |      | spi flash                            |
+|         |     |    7 |     |      | spi flash                            |
+|         |     |    6 |     |      | spi flash                            |
+|         |     |      |     |      |                                      |
+|         |     |   36 | y   |      | input only                           |
+|         |     |   39 | y   |      | input only                           |
+|       3 |     |   34 | y   |      | input only                           |
+|       4 |     |   35 | y   |      | input only                           |
+|       5 |     |   32 | y   | y    |                                      |
+|       6 |     |   33 | y   | y    |                                      |
+|       7 |     |   25 | y   | y    |                                      |
+|       8 |     |   26 | y   | y    |                                      |
+|       9 |     |   27 | y   | y    |                                      |
+|      10 |     |   14 | y   | y    | pwm at boot                          |
+|      11 |     |   12 | y   | y    | strapping pin; boot fails if high    |
+|      12 | BL  |   13 | y   | y    |                                      |
+|         |     |    9 |     |      | spi flash                            |
+|         |     |   10 |     |      | spi flash                            |
+|         |     |   11 |     |      | spi flash                            |
+|         |     |      |     |      |                                      |
+
+
+| bit | 1   | old | new |
+|-----+-----+-----+-----|
+|   0 |     | a   | f   |
+|   1 | b/c | b   | e   |
+|   2 | b/c | c   | d   |
+|   3 |     | d   | c   |
+|   4 |     | e   | b   |
+|   5 |     | f   | a   |
+|   6 | g   | g   | .   |
+|   7 |     | .   | g   |
+|     |     |     |     |
+
