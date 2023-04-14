@@ -116,7 +116,7 @@ def get_values(
     sensor_id: str,
     start: datetime,
     end: datetime,
-    limit: int = 100,
+    n: int = 100,
     db: Session = Depends(get_db),
 ):
     return (
@@ -126,7 +126,7 @@ def get_values(
             .filter(models.Value.timestamp < end)
             .filter(models.Value.timestamp > start)
         )
-        .limit(limit)
+        .limit(n)
         .all()
     )
 
