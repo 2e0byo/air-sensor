@@ -2,6 +2,7 @@ from datetime import datetime
 from json import loads
 
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_mqtt import FastMQTT, MQTTConfig
 from pydantic import ValidationError
 from sqlalchemy import func
@@ -20,6 +21,16 @@ mqtt = FastMQTT(config=mqtt_config)
 mqtt.init_app(app)
 
 sensor_topics: dict[str, str] = {}
+
+origins = ["*"]  # TODO limit when deployed
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_db():
