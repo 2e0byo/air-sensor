@@ -1,0 +1,5 @@
+device_class: humidity
+name: Humidity
+state_topic: humidity-temperature/sensor/humidity/state
+uniq_id: ESPsensorhumidity
+unit_of_measurement: '%'

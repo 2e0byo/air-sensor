@@ -1,0 +1,5 @@
+device_class: temperature
+name: Temperature
+state_topic: humidity-temperature/sensor/temperature/state
+uniq_id: ESPsensortemperature
+unit_of_measurement: °C

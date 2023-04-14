@@ -1,0 +1,5 @@
+device_class: null
+name: Backlight on time (seconds)
+state_topic: humidity-temperature/number/backlight_on_time_seconds/state
+uniq_id: ESPnumberbacklight_on_time_seconds
+unit_of_measurement: Seconds

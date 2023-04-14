@@ -1,0 +1,5 @@
+device_class: null
+name: Status
+state_topic: humidity-temperature/light/status/state
+uniq_id: ESPlightstatus
+unit_of_measurement: null

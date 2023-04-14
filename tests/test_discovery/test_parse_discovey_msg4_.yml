@@ -1,0 +1,5 @@
+device_class: null
+name: Backlight Brightness
+state_topic: humidity-temperature/number/backlight_brightness/state
+uniq_id: ESPnumberbacklight_brightness
+unit_of_measurement: null

@@ -1,0 +1,5 @@
+device_class: null
+name: Button
+state_topic: humidity-temperature/binary_sensor/button/state
+uniq_id: ESPbinary_sensorbutton
+unit_of_measurement: null
