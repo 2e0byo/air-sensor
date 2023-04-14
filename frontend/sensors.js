@@ -35,6 +35,7 @@ const createCard = (sensor, data) => {
     contents.appendChild(canvas);
     div.appendChild(contents);
     console.log(data);
+    const unit = sensor.unit_of_measurement ? ` ${sensor.unit_of_measurement}` : "";
 
     const chart = new Chart(canvas, {
         type: "line",
@@ -53,6 +54,13 @@ const createCard = (sensor, data) => {
                 x: {
                     type: "time",
                     time: {
+                    }
+                },
+                y: {
+                    ticks: {
+                        callback: function (val, i, ticks) {
+                            return Chart.Ticks.formatters.numeric.apply(this, [val, i, ticks]) + unit;
+                        }
                     }
                 }
             }
