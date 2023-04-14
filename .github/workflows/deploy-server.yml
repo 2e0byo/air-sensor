@@ -1,0 +1,15 @@
+name: Deploy server code to server.
+
+on:
+  push:
+    branches: ["master"]
+  workflow-dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          ssh john@iot.2e0byo.co.uk \
+           -i <(echo ${{secrets.DEPLOY_SSH_KEY}})\
+           "cd air-sensor && git pull && systemctl --user restart air-sensor"
