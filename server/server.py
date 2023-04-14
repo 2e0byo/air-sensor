@@ -150,5 +150,4 @@ def get_decimated_values(
         .filter(models.Value.count % (available // n) == 0)
         .filter(models.Value.timestamp < end)
         .filter(models.Value.timestamp > start)
-        .limit(n)
-    ).all()
+    ).all()[-n:]
