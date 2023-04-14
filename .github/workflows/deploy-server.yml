@@ -15,4 +15,4 @@ jobs:
           ssh john@iot.2e0byo.co.uk \
            -o StrictHostKeyChecking=no \
            -i key \
-           "cd air-sensor && git pull && systemctl --user restart air-sensor"
+           "cd air-sensor && git pull && poetry install && systemctl --user restart air-sensor"
