@@ -120,6 +120,10 @@ def get_values(
     n: int = 100,
     db: Session = Depends(get_db),
 ):
+    if not start.tzinfo:
+        start = start.replace(tzinfo=timezone.utc)
+    if not end.tzinfo:
+        end = end.replace(tzinfo=timezone.utc)
     return (
         (
             db.query(models.Value)
