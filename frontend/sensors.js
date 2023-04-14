@@ -76,7 +76,7 @@ async function getData(sensor_id, start, end, n=100) {
 }
 
 async function addSection(sensor) {
-    const WindowStartSeconds = 60*60*24*365*2;
+    const WindowStartSeconds = 60*60*24*14;
     console.log(sensor);
     const initialData = await getData(sensor.uniq_id, Date.now() - WindowStartSeconds, Date.now());
     console.log(initialData);
