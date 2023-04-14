@@ -78,7 +78,7 @@ async function getData(sensor_id, start, end, n=100) {
 async function addSection(sensor) {
     const WindowStartSeconds = 60*60*24*14;
     console.log(sensor);
-    const initialData = await getData(sensor.uniq_id, Date.now() - WindowStartSeconds, Date.now());
+    const initialData = await getData(sensor.uniq_id, Date.now() - WindowStartSeconds * 1000, Date.now());
     console.log(initialData);
     const card = createCard(sensor, initialData);
     graphs.appendChild(card);
