@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from json import loads
 
 from fastapi import Depends, FastAPI
@@ -86,7 +86,10 @@ def persist(sensor_id: str, value: str, db: Session):
         or 0
     )
     db_value = models.Value(
-        sensor_id=sensor_id, value=value, timestamp=datetime.now(), count=count + 1
+        sensor_id=sensor_id,
+        value=value,
+        timestamp=datetime.now(timezone.utc),
+        count=count + 1,
     )
     db.add(db_value)
     db.commit()
