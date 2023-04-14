@@ -48,7 +48,6 @@ const createCard = (obj, data) => {
                 }
             }]
         },
-        
         options: {
             scales: {
                 x: {
