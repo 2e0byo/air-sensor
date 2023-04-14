@@ -12,8 +12,6 @@ from sqlalchemy.orm import Session
 from . import models, schemas, secrets
 from .database import SessionLocal, engine
 
-models.Base.metadata.create_all(bind=engine)
-
 app = FastAPI()
 
 mqtt_config = MQTTConfig(**secrets.mqtt_config)
