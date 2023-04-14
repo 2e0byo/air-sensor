@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/chota">
+    <link rel="stylesheet" href="https://jenil.github.io/chota/doc-styles.css">
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <title>Sensors</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="hero is-full-screen">
+        <div class="logo is-center is-vertical-align">
+          <h3>Sensor Logs</h3>
+
+          <medium>IoT sensors generating pretty graphs</medium>
+        </div>
+        <nav class="tabs is-center" id="menu">
+          <!-- <a href="#slides">Slides</a>
+               <a href="#bibliography">Bibliography</a>
+               <a href="#assessmentent</a> -->
+          <a href="https://github.com/2e0byo/air-sensor" id="github-menu-item">GitHub</a>
+        </nav>
+      </div>
+
+      <div id="graph-container">
+      </div>
+    </div>
+
+    <script src="sensors.js"></script>
+  </body>
+
+
+  <footer>
+
+    Made with <a href="https://jenil.github.io/chota/">Chota</a>.
+    Source available at <a href="https://github.com/2e0byo/air-sensor">Github</a>.
+
+    We don't use eat your cookies or anything like that.
+    <a href="javascript:void(0)" id="theme-switch" onclick="toggleMode()">☀️</a>
+    <script>
+     if (window.matchMedia) {
+       mql = window.matchMedia("(prefers-color-scheme: dark)");
+       setMode(mql.matches? "dark" : "light");
+       mql.addEventListener("change", () => {
+         setMode(mql.matches? "dark" : "light");
+       });
+     }
+
+     function toggleMode() {
+       const bodyClass = document.body.classList;
+       setMode(bodyClass.contains("dark")? "light" : "dark");
+     }
+
+     function setMode(mode) {
+       console.log(mode);
+       const bodyClass = document.body.classList;
+       const el = document.querySelector('#theme-switch');
+       (mode == "dark")
+                ? ((el.innerHTML = "🌙"), bodyClass.add("dark"))
+                : ((el.innerHTML = "☀️"), bodyClass.remove("dark"));
+
+     }
+    </script>
+  </footer>
+
+</html>
