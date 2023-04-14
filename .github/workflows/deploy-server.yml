@@ -12,5 +12,6 @@ jobs:
       - run: |
           echo -e "${{secrets.DEPLOY_SSH_KEY}}" > key
           ssh john@iot.2e0byo.co.uk \
+           -o StrictHostKeyChecking=no \
            -i key \
            "cd air-sensor && git pull && systemctl --user restart air-sensor"
