@@ -14,24 +14,24 @@ async function getSensors() {
 
 const canvasId = (id) => `canvas-${id}`;
 
-const createCard = (obj, data) => {
+const createCard = (sensor, data) => {
     const section = document.createElement("section");
     const div = document.createElement("div");
     div.className = "card";
-    div.id = obj.uniq_id;
+    div.id = sensor.uniq_id;
     const header = `
 <header>
 <div class="row is-marginless">
   <div class="col-8 is marginless">
-     <h4>${obj.name}</h4>
+     <h4>${sensor.name}</h4>
   </div>
-  <div class="col-4 text-right">(${obj.uniq_id})</div>
+  <div class="col-4 text-right">(${sensor.uniq_id})</div>
 `;
     div.innerHTML = header;
 
     const contents = document.createElement("div");
     const canvas = document.createElement("canvas");
-    canvas.id = canvasId(obj.uniq_id);
+    canvas.id = canvasId(sensor.uniq_id);
     contents.appendChild(canvas);
     div.appendChild(contents);
     console.log(data);
@@ -40,7 +40,7 @@ const createCard = (obj, data) => {
         type: "line",
         data: {
             datasets: [{
-                label: obj.name,
+                label: sensor.name,
                 data: data,
                 parsing: {
                     xAxisKey: "timestamp",
