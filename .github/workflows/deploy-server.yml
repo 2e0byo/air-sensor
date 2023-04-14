@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo ${{secrets.DEPLOY_SSH_KEY}} > key
+          echo -e "${{secrets.DEPLOY_SSH_KEY}}" > key
           ssh john@iot.2e0byo.co.uk \
            -i key \
            "cd air-sensor && git pull && systemctl --user restart air-sensor"
