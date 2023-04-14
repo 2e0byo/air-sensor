@@ -12,6 +12,7 @@ fastapi = "^0.95.0"
 fastapi-mqtt = "^1.0.7"
 SQLAlchemy = "^2.0.9"
 httpx = "^0.24.0"
+sqlalchemy-utc = "^0.14.0"
 
 
 [tool.poetry.group.dev.dependencies]

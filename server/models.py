@@ -1,5 +1,6 @@
-from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+from sqlalchemy_utc import UtcDateTime
 
 from .database import Base
 
@@ -21,6 +22,6 @@ class Value(Base):
     id = Column(Integer, primary_key=True, index=True)
     count = Column(Integer, index=True)
     value = Column(String, index=True)
-    timestamp = Column(DateTime, index=True)
+    timestamp = Column(UtcDateTime, index=True)
     sensor_id = Column(String, ForeignKey("sensors.uniq_id"))
     sensor = relationship("Sensor", back_populates="values")
