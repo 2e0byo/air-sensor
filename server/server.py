@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from json import loads
 
@@ -39,6 +40,9 @@ def get_db():
         db.close()
 
 
+db_context = contextmanager(get_db)
+
+
 def parse_discovery_message(msg: dict) -> schemas.SensorCreate | None:
     try:
         return schemas.SensorCreate(
@@ -72,8 +76,8 @@ async def msg(_client, _topic, payload, _qos, _properties):
         topic = parsed.state_topic
         mqtt.client.subscribe(topic)
         sensor_topics[topic] = parsed.uniq_id
-        db = next(get_db())
-        create_sensor(parsed, db)
+        with db_context() as db:
+            create_sensor(parsed, db)
 
 
 def persist(sensor_id: str, value: str, db: Session):
@@ -98,8 +102,8 @@ def persist(sensor_id: str, value: str, db: Session):
 @mqtt.on_message()
 async def message(client, topic, payload, _qos, _properties):
     if sensor_id := sensor_topics.get(topic, None):
-        db = next(get_db())
-        persist(sensor_id, payload.decode(), db)
+        with db_context() as db:
+            persist(sensor_id, payload.decode(), db)
 
 
 @app.get("/sensor")
