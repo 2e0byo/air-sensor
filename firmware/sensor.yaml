@@ -1,5 +1,6 @@
 esphome:
   name: humidity-temperature
+  friendly_name: Paris Bathroom Humidity Temperature Sensor
   on_boot:
     then:
       - delay: 200ms
@@ -50,6 +51,7 @@ mqtt:
   username: humidity-sensor
   password: !secret mqtt_password
   certificate_authority: !secret certificate_authority
+  discovery_object_id_generator: "device_name"
 
 time:
   - platform: sntp
